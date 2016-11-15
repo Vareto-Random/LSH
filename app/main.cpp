@@ -17,14 +17,10 @@ int main(int argc, char *argv[])
     /*
      * Feature descriptors
      */
-    cout << argv[0] << endl;
-    for (string &path : ls_files("data")) {
-        cout << path << endl;
+    for (string &path : ls_files("/Users/Vareto/Documents/LSH/data")) {
         Mat image, descriptor;
         image = imread(path, CV_LOAD_IMAGE_GRAYSCALE);
-        //cv::imshow("image", image);
-        //cv::waitKey(0);
-
+        cout << path << ": " << image.rows << " - " << image.cols << endl;
         image.reshape(1, 1).convertTo(descriptor, CV_32F);
 
         scores.push_back({path, 0});
@@ -51,12 +47,12 @@ int main(int argc, char *argv[])
     /*
      * Query
      */
-    HTML html("result.html");
-    for (string &path : ls_files("../data/query")) {
+    HTML html("/Users/Vareto/Documents/LSH/result.html");
+    for (string &path : ls_files("/Users/Vareto/Documents/LSH/data/query")) {
 
         Mat image, query;
         image = imread(path, CV_LOAD_IMAGE_GRAYSCALE);
-
+        cout << path << ": " << image.rows << " - " << image.cols << endl;
         image.reshape(1, 1).convertTo(query, CV_32F);
 
         query = query * hash;
@@ -77,7 +73,6 @@ int main(int argc, char *argv[])
 
         html.write(path, rank);
     }
-
 
     return EXIT_SUCCESS;
 }

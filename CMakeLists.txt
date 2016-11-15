@@ -29,7 +29,7 @@ find_package(Boost COMPONENTS system filesystem REQUIRED)
 
 find_package(OpenCV REQUIRED)
 find_package(OpenCV COMPONENTS opencv_core opencv_imgproc opencv_imgcodecs opencv_highgui REQUIRED)
-find_path(OpenCV_INCLUDE_DIR "opencv/cv.h" PATHS "${OpenCV_DIR}" PATH_SUFFIXES "include" DOC "")
+#find_path(OpenCV_INCLUDE_DIR "opencv/cv.h" PATHS "${OpenCV_DIR}" PATH_SUFFIXES "include" DOC "")
 
 # If the package has been found, several variables will
 # be set, you can find the full list with descriptions
