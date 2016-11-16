@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     /*
      * Feature descriptors
      */
-    for (string &path : ls_files("/Users/Vareto/Documents/LSH/data")) {
+    for (string &path : ls_files("/home/rafael/GIT/LSH/data")) {
         Mat image, descriptor;
         image = imread(path, CV_LOAD_IMAGE_GRAYSCALE);
         cout << path << ": " << image.rows << " - " << image.cols << endl;
@@ -29,6 +29,12 @@ int main(int argc, char *argv[])
 
     /*
      * Generate hash functions
+     *
+     * This part of the code generates straight lines randomly.
+     * To represent a line in a given space, it must have the same dimension of all samples.
+     * Therefore, we have a hashtable containing 100 rows and D columns(the one below is transposed)
+     *
+     * As you can see, the random values are generated accoring to the normal distribution
      */
     Mat_<float> hash(dataset.cols, 100);
     default_random_engine gen;
@@ -38,6 +44,10 @@ int main(int argc, char *argv[])
 
     /*
      * Index dataset samples
+     *
+     * This part of the code determines the samples position in the hashtable:
+     * If x * W' > 0, positive set and negative set otherwise
+     * The we convert the dataset into a binary container
      */
     dataset = dataset * hash;
     for (float &v : (cv::Mat_<float>) dataset)
@@ -47,8 +57,8 @@ int main(int argc, char *argv[])
     /*
      * Query
      */
-    HTML html("/Users/Vareto/Documents/LSH/result.html");
-    for (string &path : ls_files("/Users/Vareto/Documents/LSH/data/query")) {
+    HTML html("/home/rafael/GIT/LSH/result.html");
+    for (string &path : ls_files("/home/rafael/GIT/LSH/data/query")) {
 
         Mat image, query;
         image = imread(path, CV_LOAD_IMAGE_GRAYSCALE);
@@ -67,7 +77,7 @@ int main(int argc, char *argv[])
         // make a copy of scores and rank them
         vector<pair<string, float>> rank;
         rank.assign(scores.begin(), scores.end());
-        sort(rank.begin(), rank.end(), [](pair<string, float> &a, pair<string, float> &b) {
+        sort(rank.begin(), rank.end(), [](pair<string, float> a, pair<string, float> b) {
             return a.second < b.second;
         });
 
