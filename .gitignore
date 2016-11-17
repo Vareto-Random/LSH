@@ -1,3 +1,8 @@
+# Custom files
+*.*~
+*.html
+*.txt.user
+
 # Compiled Object files
 *.slo
 *.lo
